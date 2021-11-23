@@ -16,3 +16,7 @@ api.json
 # Binaries
 build/
 *.obj
+
+.mono/assemblies/Debug/
+
+.mono/metadata/
