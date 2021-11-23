@@ -54,7 +54,7 @@ public class NetworkManager : Node
         
         timeSyncPacket.serverTime = timeElapsed;
         timeSyncPacket.serverTimestamp = timestamp;
-
+        
         Byte[] sendBytes = timeSyncPacket.Serialise();
         
         udpClient.Send(sendBytes, sendBytes.Length);
@@ -78,7 +78,7 @@ public class NetworkManager : Node
                     ConnectionPacket connectionReceivedPacket = new ConnectionPacket();
                     connectionReceivedPacket.Deserialise(receivedResults.Buffer);
                     Connect(receivedResults.RemoteEndPoint.Address.ToString(), 24011);
-                    
+
                     GD.Print(receivedResults.RemoteEndPoint.Address.ToString());
                     GD.Print("Connection request recieved");
                     break;

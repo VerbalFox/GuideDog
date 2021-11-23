@@ -1,8 +1,0 @@
-C:\Users\cypri\OneDrive\Desktop\games\Godot\GuideDog\GuideDog\.mono\temp\bin\Debug\GuideDog.dll
-C:\Users\cypri\OneDrive\Desktop\games\Godot\GuideDog\GuideDog\.mono\temp\bin\Debug\GuideDog.pdb
-C:\Users\cypri\OneDrive\Desktop\games\Godot\GuideDog\GuideDog\.mono\temp\obj\Debug\GuideDog.csprojAssemblyReference.cache
-C:\Users\cypri\OneDrive\Desktop\games\Godot\GuideDog\GuideDog\.mono\temp\obj\Debug\GuideDog.AssemblyInfoInputs.cache
-C:\Users\cypri\OneDrive\Desktop\games\Godot\GuideDog\GuideDog\.mono\temp\obj\Debug\GuideDog.AssemblyInfo.cs
-C:\Users\cypri\OneDrive\Desktop\games\Godot\GuideDog\GuideDog\.mono\temp\obj\Debug\GuideDog.csproj.CoreCompileInputs.cache
-C:\Users\cypri\OneDrive\Desktop\games\Godot\GuideDog\GuideDog\.mono\temp\obj\Debug\GuideDog.dll
-C:\Users\cypri\OneDrive\Desktop\games\Godot\GuideDog\GuideDog\.mono\temp\obj\Debug\GuideDog.pdb

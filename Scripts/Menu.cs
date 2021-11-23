@@ -47,6 +47,7 @@ public class Menu : Control
 
         if (networkManager.connected) {
             ipLabel.Text = "Connected!!";
+            lobby.Visible = true;
         } else {
             ipLabel.Text = externalIpString;
         }
