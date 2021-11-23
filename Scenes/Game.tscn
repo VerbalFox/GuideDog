@@ -1,0 +1,20 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scenes/Levels/Level1.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/LevelManager.cs" type="Script" id=2]
+[ext_resource path="res://Scenes/Levels/Level2.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Levels/Level3.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Instances/HumanPlayer.tscn" type="PackedScene" id=5]
+
+[node name="Game" type="Node2D"]
+script = ExtResource( 2 )
+lvl1 = ExtResource( 1 )
+lvl2 = ExtResource( 3 )
+lvl3 = ExtResource( 4 )
+
+[node name="HumanPlayer" parent="." instance=ExtResource( 5 )]
+position = Vector2( 536, 529 )
+z_index = 1
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color( 0, 0, 0, 1 )
