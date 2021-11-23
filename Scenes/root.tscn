@@ -1,0 +1,91 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scripts/NetworkManager.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Menu.cs" type="Script" id=2]
+
+[node name="root" type="Node"]
+
+[node name="NetworkManager" type="Node" parent="."]
+script = ExtResource( 1 )
+
+[node name="Menu" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Host" type="Button" parent="Menu"]
+margin_left = 50.0
+margin_top = 100.0
+margin_right = 200.0
+margin_bottom = 140.0
+text = "Host"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Join" type="Button" parent="Menu"]
+margin_left = 50.0
+margin_top = 157.0
+margin_right = 200.0
+margin_bottom = 197.0
+text = "Join"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="IpAddressBox" type="TextEdit" parent="Menu"]
+margin_left = 50.0
+margin_top = 43.0
+margin_right = 200.0
+margin_bottom = 83.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="IpAddressLabel" type="Label" parent="Menu"]
+margin_left = 61.0
+margin_top = 530.0
+margin_right = 250.0
+margin_bottom = 544.0
+text = "Something didn't work, meow"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TimeLabel" type="Label" parent="Menu"]
+margin_left = 61.0
+margin_top = 551.0
+margin_right = 250.0
+margin_bottom = 565.0
+text = "Something didn't work, meow"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Lobby" type="Control" parent="Menu"]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Player1Ready" type="CheckBox" parent="Menu/Lobby"]
+margin_left = 834.0
+margin_top = 75.0
+margin_right = 933.0
+margin_bottom = 99.0
+text = "Ready?"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Player2Ready" type="CheckBox" parent="Menu/Lobby"]
+margin_left = 834.0
+margin_top = 103.0
+margin_right = 933.0
+margin_bottom = 127.0
+text = "Ready?"

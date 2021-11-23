@@ -20,3 +20,11 @@ build/
 .mono/assemblies/Debug/
 
 .mono/metadata/
+
+.mono/temp/obj/Debug/
+
+.mono/temp/bin/Debug/
+
+.mono/temp/bin/ExportDebug/
+
+.mono/temp/obj/
