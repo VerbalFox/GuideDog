@@ -21,7 +21,7 @@ _global_script_class_icons={
 [application]
 
 config/name="GuideDog"
-run/main_scene="res://Scenes/GameTestLevel.tscn"
+run/main_scene="res://Scenes/Game.tscn"
 config/icon="res://Art/Entities/icon.png"
 
 [gdnative]
