@@ -16,11 +16,14 @@ public class LevelManager : Node2D
     private List<PackedScene> levels = new List<PackedScene>();
 
     private int currentLevel;
+
+    private float cooldown;
     public override void _Ready()
     {
         AddChild(lvl1.Instance());
 
         currentLevel = 0;
+        cooldown = 0;
 
         levels.Add(lvl1);
         levels.Add(lvl2);
@@ -28,12 +31,19 @@ public class LevelManager : Node2D
     }
     public void NextLevel()
     {
-        currentLevel++;
-        if (currentLevel < levels.Count)
+        if (cooldown < 0)
         {
-            //GetChild<Node2D>(1).QueueFree();
-            GetChild<Node2D>(1).QueueFree();
-            AddChild(levels[currentLevel].Instance());
+            currentLevel++;
+            if (currentLevel < levels.Count)
+            {
+                GetChild<Node2D>(2).QueueFree();
+                AddChild(levels[currentLevel].Instance());
+            }
+            cooldown = 1;
         }
+    }
+    public override void _Process(float dt)
+    {
+        cooldown -= dt;
     }
 }
