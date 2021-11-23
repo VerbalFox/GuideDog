@@ -21,7 +21,7 @@ _global_script_class_icons={
 [application]
 
 config/name="GuideDog"
-config/icon="res://icon.png"
+config/icon="res://Art/Entities/icon.png"
 
 [gdnative]
 
