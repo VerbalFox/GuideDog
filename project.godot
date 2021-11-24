@@ -36,6 +36,15 @@ multirun/add_custom_args=true
 multirun/first_window_args="listen"
 multirun/other_window_args="join"
 
+[display]
+
+window/size/width=1920
+window/size/height=1080
+
+[editor]
+
+main_run_args="listen"
+
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/multirun/plugin.cfg" )
@@ -96,4 +105,5 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
+environment/default_clear_color=Color( 0, 0, 0, 1 )
 environment/default_environment="res://default_env.tres"

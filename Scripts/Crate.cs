@@ -74,29 +74,25 @@ public class Crate : RigidBody2D
     public void NorthCollision(Node b)
     {
         //if (!cantMove[2])
-        Collision(new Vector2(0, 96), b, 0);
-        //Position = new Vector2(Position.x, Position.y + 96);
+        Collision(new Vector2(0, 128), b, 0);
     }
 
     public void EastCollision(Node b)
     {
         //if (!cantMove[3])
-        Collision(new Vector2(-96, 0), b, 1);
-        //Position = new Vector2(Position.x - 96, Position.y);
+        Collision(new Vector2(-128, 0), b, 1);
     }
 
     public void SouthCollision(Node b)
     {
         //if (!cantMove[0])
-        Collision(new Vector2(0, -96), b, 2);
-        //Position = new Vector2(Position.x, Position.y - 96);
+        Collision(new Vector2(0, -128), b, 2);
     }
 
     public void WestCollision(Node b)
     {
         //if (!cantMove[1])
-        Collision(new Vector2(96, 0), b, 3);
-        //Position = new Vector2(Position.x + 96, Position.y);
+        Collision(new Vector2(128, 0), b, 3);
     }
 
     public void ExitNorthCollision(Node b)

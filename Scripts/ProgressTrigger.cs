@@ -5,8 +5,8 @@ public class ProgressTrigger : Area2D
 {
     public void BodyEntered(PhysicsBody2D b)
     {
-        GetNode<KinematicBody2D>("/root/Game/HumanPlayer").Position = new Vector2(536, 529);
-        GetNode<KinematicBody2D>("/root/Game/DogPlayer").Position = new Vector2(536, 529);
-        GetNode("/root/Game").CallDeferred("NextLevel");
+        GetNode<KinematicBody2D>("/root/root/SceneSwitcher/Game/HumanPlayer").Position = new Vector2(962, 957);
+        GetNode<KinematicBody2D>("/root/root/SceneSwitcher/Game/DogPlayer").Position = new Vector2(962, 957);
+        GetNode("/root/root/SceneSwitcher/Game").CallDeferred("NextLevel");
     }
 }
