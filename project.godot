@@ -24,6 +24,10 @@ config/name="GuideDog"
 run/main_scene="res://Scenes/root.tscn"
 config/icon="res://Art/Entities/icon.png"
 
+[autoload]
+
+Player="*res://Scripts/Player.cs"
+
 [debug]
 
 multirun/number_of_windows=2

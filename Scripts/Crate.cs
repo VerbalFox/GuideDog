@@ -13,6 +13,7 @@ public class Crate : RigidBody2D
     private float moveTime;
 
     private bool[] cantMove = new bool[4];
+    private bool[] cantCrush = new bool[4];
 
     public override void _Ready()
     {
@@ -23,6 +24,7 @@ public class Crate : RigidBody2D
         for (int i = 0; i < 4; i++)
         {
             cantMove[i] = false;
+            cantCrush[i] = false;
         }
     }
     public override void _Process(float dt)
@@ -37,9 +39,12 @@ public class Crate : RigidBody2D
         }
         else if (playerCollision == true && !schmooving && Input.IsActionJustPressed("pull"))
         {
-            newPos = -newPos;
-            newPos += Position;
-            schmooving = true;
+            if (!(cantCrush[0] && newPos.y > 0) && !(cantCrush[2] && newPos.y < 0) &&  !(cantCrush[1] && newPos.x < 0) && !(cantCrush[3] && newPos.x > 0))
+            {
+                newPos = -newPos;
+                newPos += Position;
+                schmooving = true;
+            }
         }
 
         if (schmooving)
@@ -51,6 +56,41 @@ public class Crate : RigidBody2D
                 schmooving = false;
                 timer = 0;
             }
+        }
+
+        if (GetNode<DogPlayer>("/root/root/SceneSwitcher/Game/DogPlayer").isDog)
+        {
+            GetNode<Sprite>("Sprite").Visible = false;
+        }
+        else
+        {
+            GetNode<Sprite>("Sprite").Visible = true;
+        }
+    }
+
+    public override void _PhysicsProcess(float dt)
+    {
+        CheckCollision(new Vector2(Position.x, Position.y - 192), 0);
+        CheckCollision(new Vector2(Position.x + 192, Position.y), 1);
+        CheckCollision(new Vector2(Position.x, Position.y + 192), 2);
+        CheckCollision(new Vector2(Position.x - 192, Position.y), 3);
+
+        GD.Print($"{cantCrush[0]}, {cantCrush[1]}, {cantCrush[2]}, {cantCrush[3]}");
+    }
+
+    private void CheckCollision(Vector2 _centre, int _side)
+    {
+        Physics2DDirectSpaceState spaceState = GetWorld2d().DirectSpaceState;
+        var hit = spaceState.IntersectRay(new Vector2(_centre.x - 20, _centre.y), new Vector2(new Vector2(_centre.x + 20, _centre.y)));
+        var hit2 = spaceState.IntersectRay(new Vector2(_centre.x, _centre.y - 20), new Vector2(new Vector2(_centre.x, _centre.y + 20)));
+
+        if(hit.Count > 0 || hit2.Count > 0)
+        {
+            cantCrush[_side] = true;
+        }
+        else
+        {
+            cantCrush[_side] = false;
         }
     }
 
@@ -67,7 +107,6 @@ public class Crate : RigidBody2D
         }
         else
         {
-            GD.Print("I cannae move");
             cantMove[_side] = true;
         }
     }
