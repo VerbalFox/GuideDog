@@ -168,7 +168,7 @@ public class NetworkManager : Node
                     if (isHost) {
                         clientPlayer.Position = new Vector2((float)positionUpdatePacket.posX, (float)positionUpdatePacket.posY);
                     } else {
-                        hostPlayer.Position = new Vector2((float)positionUpdatePacket.posX, (float)positionUpdatePacket.posY);
+                        hostPlayer.desiredPosition = new Vector2((float)positionUpdatePacket.posX, (float)positionUpdatePacket.posY);
                     }
                     break;
             }

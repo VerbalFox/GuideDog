@@ -5,6 +5,7 @@ public class HumanPlayer : KinematicBody2D
 {
   // Declare member variables here. Examples:
    public bool isPlayer;
+   public Vector2 desiredPosition;
    float speed;
    Vector2 velocity;
 
@@ -19,6 +20,8 @@ public class HumanPlayer : KinematicBody2D
         setSpeed(150);
         animationSprite = GetNode<AnimatedSprite>("AnimatedSprite");
         velocity = new Vector2(0, 0);
+
+        desiredPosition = Position;
     }
 
     public void setPlayerBool(string msg)
@@ -182,11 +185,17 @@ public class HumanPlayer : KinematicBody2D
         
     }
 
+    public void NetworkPositionLerp() {
+        Position = new Vector2(Mathf.Lerp(Position.x, desiredPosition.x, 0.5f), Mathf.Lerp(Position.y, desiredPosition.y, 0.5f));
+    }
   
     public override void _PhysicsProcess(float delta)
     {
-        if (isPlayer)
-        movePlayer();
-        animationHandler();
+        if (isPlayer) {
+            movePlayer();
+            animationHandler();
+        } else {
+            NetworkPositionLerp();
+        }
     }
 }
