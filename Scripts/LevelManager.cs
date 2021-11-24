@@ -45,11 +45,5 @@ public class LevelManager : Node2D
     public override void _Process(float dt)
     {
         cooldown -= dt;
-
-        if (Input.IsActionJustPressed("debugSwitch"))
-        {
-            GetNode<HumanPlayer>("HumanPlayer").isPlayer = !GetNode<HumanPlayer>("HumanPlayer").isPlayer;
-            GetNode<DogPlayer>("DogPlayer").isDog = !GetNode<DogPlayer>("DogPlayer").isDog;
-        }
     }
 }
