@@ -59,6 +59,35 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="IPLab" type="Label" parent="."]
+margin_left = 24.0
+margin_top = 56.0
+margin_right = 64.0
+margin_bottom = 70.0
+rect_pivot_offset = Vector2( 20, 27 )
+text = "IP: "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="IPLab2" type="Label" parent="."]
+margin_left = 63.0
+margin_top = 289.0
+margin_right = 686.0
+margin_bottom = 388.0
+rect_pivot_offset = Vector2( 20, 27 )
+text = "How to play:
+If you're hosting, simply press host.
+If you're joining, type in the IP address of the person you want to connect to, see below for yours!
+
+Once you're connected, you should see your IP address be replaced with a message letting you know! The game will begin when you both check ready!
+
+The host will be the human character.
+The one joining will be the ghostly pupper."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Lobby" type="Control" parent="."]
 visible = false
 margin_right = 40.0

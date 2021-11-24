@@ -28,6 +28,7 @@ public class NetworkManager : Node
     private float lobbyStatusPacketTimer = 0;
     private float timeSyncPacketTimer = 0;
     private float positionSyncPacketTimer = 0;
+    private float lastReceivedPacketTime = 0;
     private HumanPlayer hostPlayer;
     private DogPlayer clientPlayer;
     private SceneSwitcher switcher;
@@ -136,6 +137,7 @@ public class NetworkManager : Node
         while (udpClient != null)
         {
             var receivedResults = await udpClient.ReceiveAsync();
+            lastReceivedPacketTime = 0;
             var packetType = Packet.GetPacketTypeFromStream(receivedResults.Buffer);
             
             switch (packetType) {
@@ -195,6 +197,7 @@ public class NetworkManager : Node
             lobbyStatusPacketTimer += delta;
             timeSyncPacketTimer += delta;
             positionSyncPacketTimer += delta;
+            lastReceivedPacketTime += delta;
         }
 
         if (lobbyStatusPacketTimer > 0.1f) {
@@ -205,6 +208,10 @@ public class NetworkManager : Node
         if (timeSyncPacketTimer > 1) {
             timeSyncPacketTimer -= 1;
             SendTimeSync();
+        }
+
+        if (lastReceivedPacketTime > 8) {
+            switcher.LoadMenu();
         }
         
         if (positionSyncPacketTimer > (1.0f / 20) && gameLoaded) {
