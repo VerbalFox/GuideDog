@@ -37,13 +37,19 @@ public class Menu : Control
         networkManager.OpenSocket(24010);
 
         networkManager.isHost = true;
+
+        hostButton.Disabled = true;
+        joinButton.Disabled = true;
     }
 
     private void Join() {
         networkManager.OpenSocket(24011);
-        networkManager.Connect("127.0.0.1", 24010);
+        networkManager.Connect(ipTextBox.Text, 24010);
         networkManager.SendConnectionRequest();
-        
+
+        hostButton.Disabled = true;
+        joinButton.Disabled = true;
+
         lobby.Visible = true;
     }
 

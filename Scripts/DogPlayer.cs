@@ -19,6 +19,7 @@ public class DogPlayer : KinematicBody2D
         animationSprite = GetNode<AnimatedSprite>("AnimatedSprite");
         velocity = new Vector2(0, 0);
 
+        
         desiredPosition = Position;
     }
 

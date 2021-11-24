@@ -1,11 +1,33 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scripts/Menu.cs" type="Script" id=1]
+[ext_resource path="res://title screen.png" type="Texture" id=2]
 
 [node name="Menu" type="Control"]
 margin_right = 40.0
 margin_bottom = 40.0
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_left = -15.0
+margin_top = -98.0
+margin_right = 2145.0
+margin_bottom = 1342.0
+rect_scale = Vector2( 0.9, 0.9 )
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = -82.0001
+margin_top = -114.0
+margin_right = 2100.0
+margin_bottom = 1324.0
+color = Color( 0, 0, 0, 0.627451 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -55,6 +77,35 @@ margin_top = 551.0
 margin_right = 250.0
 margin_bottom = 565.0
 text = "Something didn't work, meow"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="IPLab" type="Label" parent="."]
+margin_left = 24.0
+margin_top = 56.0
+margin_right = 64.0
+margin_bottom = 70.0
+rect_pivot_offset = Vector2( 20, 27 )
+text = "IP: "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="IPLab2" type="Label" parent="."]
+margin_left = 63.0
+margin_top = 289.0
+margin_right = 686.0
+margin_bottom = 388.0
+rect_pivot_offset = Vector2( 20, 27 )
+text = "How to play:
+If you're hosting, simply press host.
+If you're joining, type in the IP address of the person you want to connect to, see below for yours!
+
+Once you're connected, you should see your IP address be replaced with a message letting you know! The game will begin when you both check ready!
+
+The host will be the human character.
+The one joining will be the ghostly pupper."
 __meta__ = {
 "_edit_use_anchors_": false
 }
