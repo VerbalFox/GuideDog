@@ -36,7 +36,7 @@ public class LevelManager : Node2D
             currentLevel++;
             if (currentLevel < levels.Count)
             {
-                GetChild<Node2D>(2).QueueFree();
+                GetChild<Node2D>(3).QueueFree();
                 AddChild(levels[currentLevel].Instance());
             }
             cooldown = 1;
@@ -45,5 +45,11 @@ public class LevelManager : Node2D
     public override void _Process(float dt)
     {
         cooldown -= dt;
+
+        if (Input.IsActionJustPressed("debugSwitch"))
+        {
+            GetNode<HumanPlayer>("/root/Game/HumanPlayer").isPlayer = !GetNode<HumanPlayer>("/root/Game/HumanPlayer").isPlayer;
+            GetNode<DogPlayer>("/root/Game/DogPlayer").isDog = !GetNode<DogPlayer>("/root/Game/DogPlayer").isDog;
+        }
     }
 }
