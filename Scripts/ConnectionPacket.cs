@@ -12,7 +12,7 @@ public class ConnectionPacket : Packet
     public byte[] Serialise() {
         var array = 
         BitConverter.GetBytes(((Int32)type)); // 4 byte
-        
+
         return array.ToArray();
     }
     

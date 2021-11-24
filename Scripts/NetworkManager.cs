@@ -19,8 +19,12 @@ public class NetworkManager : Node
 
     UdpClient udpClient;
     public double timeElapsed = 0;
-
+    public bool isHost = false;
+    public bool isReady = false;
+    public bool isRemoteClientReady = false;
     public bool connected = false;
+
+    private float lobbyStatusPacketTimer = 0;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -30,18 +34,29 @@ public class NetworkManager : Node
 
     public void OpenSocket(int port) {
         udpClient = new UdpClient(port);
+
+        Task.Run(Receive);
     }
 
     public void Connect(string ip, int port) {
         udpClient.Connect(ip, port);
         connected = true;
-        Task.Run(Receive);
     }
 
     public void SendConnectionRequest() {
         ConnectionPacket connectionPacket = new ConnectionPacket();
         
         Byte[] sendBytes = connectionPacket.Serialise();
+        
+        udpClient.Send(sendBytes, sendBytes.Length);
+    }
+
+    public void SendLobbyStatus() {
+        LobbyStatusPacket lobbyStatusPacket = new LobbyStatusPacket();
+        
+        lobbyStatusPacket.isReady = isReady;
+
+        Byte[] sendBytes = lobbyStatusPacket.Serialise();
         
         udpClient.Send(sendBytes, sendBytes.Length);
     }
@@ -65,7 +80,7 @@ public class NetworkManager : Node
         {
             var receivedResults = await udpClient.ReceiveAsync();
             var packetType = Packet.GetPacketTypeFromStream(receivedResults.Buffer);
-
+            
             switch (packetType) {
                 case PacketType.TimeSyncServer:
                     TimeSyncServerPacket timeReceivedPacket = new TimeSyncServerPacket();
@@ -78,9 +93,12 @@ public class NetworkManager : Node
                     ConnectionPacket connectionReceivedPacket = new ConnectionPacket();
                     connectionReceivedPacket.Deserialise(receivedResults.Buffer);
                     Connect(receivedResults.RemoteEndPoint.Address.ToString(), 24011);
+                    break;
+                case PacketType.LobbyStatus:
+                    LobbyStatusPacket lobbyStatusPacket = new LobbyStatusPacket();
+                    lobbyStatusPacket.Deserialise(receivedResults.Buffer);
 
-                    GD.Print(receivedResults.RemoteEndPoint.Address.ToString());
-                    GD.Print("Connection request recieved");
+                    isRemoteClientReady = lobbyStatusPacket.isReady;
                     break;
             }
         }
@@ -90,9 +108,14 @@ public class NetworkManager : Node
     public override void _Process(float delta)
     {
         timeElapsed += delta;
-        
+
         if (connected) {
-            SendTimeSync();
+            lobbyStatusPacketTimer += delta;
+        }
+
+        if (lobbyStatusPacketTimer > 0.1f) {
+            lobbyStatusPacketTimer = 0;
+            SendLobbyStatus();
         }
     }
     
