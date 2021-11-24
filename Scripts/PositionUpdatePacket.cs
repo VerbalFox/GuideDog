@@ -13,7 +13,9 @@ public class PositionUpdatePacket : Packet
         var array = 
                 BitConverter.GetBytes(((Int32)type)) // 4 byte
         .Concat(BitConverter.GetBytes(posX)) // 8 byte
-        .Concat(BitConverter.GetBytes(posY)); // 8 byte
+        .Concat(BitConverter.GetBytes(posY)) // 8 byte
+        .Concat(BitConverter.GetBytes(velX)) // 8 byte
+        .Concat(BitConverter.GetBytes(velY)); // 8 byte
 
         return array.ToArray();
     }
@@ -25,8 +27,12 @@ public class PositionUpdatePacket : Packet
         
         posX = BitConverter.ToDouble(stream, index);          index += sizeof(double); // index = 4
         posY = BitConverter.ToDouble(stream, index);     index += sizeof(double); // index = 12
+        velX = BitConverter.ToDouble(stream, index);          index += sizeof(double); // index = 4
+        velY = BitConverter.ToDouble(stream, index);     index += sizeof(double); // index = 12
     }
     
     public double posX;
     public double posY;
+    public double velX;
+    public double velY;
 }

@@ -95,11 +95,13 @@ public class NetworkManager : Node
         }
     }
 
-    public void SendPositionSync(Vector2 pos) {
+    public void SendPositionSync(Vector2 pos, Vector2 vel) {
         PositionUpdatePacket positionUpdate = new PositionUpdatePacket();
 
         positionUpdate.posX = pos.x;
         positionUpdate.posY = pos.y;
+        positionUpdate.velX = vel.x;
+        positionUpdate.velY = vel.y;
 
         Byte[] sendBytes = positionUpdate.Serialise();
 
@@ -165,10 +167,14 @@ public class NetworkManager : Node
                     PositionUpdatePacket positionUpdatePacket = new PositionUpdatePacket();
                     positionUpdatePacket.Deserialise(receivedResults.Buffer);
 
-                    if (isHost) {
-                        clientPlayer.Position = new Vector2((float)positionUpdatePacket.posX, (float)positionUpdatePacket.posY);
-                    } else {
-                        hostPlayer.desiredPosition = new Vector2((float)positionUpdatePacket.posX, (float)positionUpdatePacket.posY);
+                    if (gameLoaded) {
+                        if (isHost) {
+                            clientPlayer.desiredPosition = new Vector2((float)positionUpdatePacket.posX, (float)positionUpdatePacket.posY);
+                            clientPlayer.networkedAnimationHandler(new Vector2((float)positionUpdatePacket.velX, (float)positionUpdatePacket.velY));
+                        } else {
+                            hostPlayer.desiredPosition = new Vector2((float)positionUpdatePacket.posX, (float)positionUpdatePacket.posY);
+                            hostPlayer.networkedAnimationHandler(new Vector2((float)positionUpdatePacket.velX, (float)positionUpdatePacket.velY));
+                        }
                     }
                     break;
             }
@@ -199,9 +205,9 @@ public class NetworkManager : Node
         if (positionSyncPacketTimer > (1.0f / 20) && gameLoaded) {
             positionSyncPacketTimer = 0;
             if (isHost) {
-                SendPositionSync(hostPlayer.Position);
+                SendPositionSync(hostPlayer.Position, hostPlayer.velocity);
             } else {
-                SendPositionSync(clientPlayer.Position);
+                SendPositionSync(clientPlayer.Position, clientPlayer.velocity);
             }
         }
 

@@ -7,7 +7,7 @@ public class HumanPlayer : KinematicBody2D
    public bool isPlayer;
    public Vector2 desiredPosition;
    float speed;
-   Vector2 velocity;
+   public Vector2 velocity;
 
    private AnimatedSprite animationSprite;
 
@@ -137,7 +137,7 @@ public class HumanPlayer : KinematicBody2D
         
     }
 
-    void networkedAnimationHandler(Vector2 velocity)
+    public void networkedAnimationHandler(Vector2 velocity)
     {
         // if two buttons are pressed at the same time decide on animation
         if (velocity.x > 0 && velocity.y < 0) // moving right and up

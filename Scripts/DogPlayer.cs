@@ -5,8 +5,9 @@ public class DogPlayer : KinematicBody2D
 {
     // Declare member variables here. Examples:
    public bool isDog;
+   public Vector2 desiredPosition;
    float speed;
-   Vector2 velocity;
+   public Vector2 velocity;
 
    private AnimatedSprite animationSprite;
 
@@ -123,14 +124,66 @@ public class DogPlayer : KinematicBody2D
 
         
     }
+public void networkedAnimationHandler(Vector2 velocity)
+    {
+        // if two buttons are pressed at the same time decide on animation
+        if (velocity.x > 0 && velocity.y < 0) // moving right and up
+        {
+            animationSprite.Play("walkRight");
+        }
+        else if ( velocity.x < 0 && velocity.y < 0  ) // moving left and up
+        {
+           animationSprite.Play("walkLeft");
+        }
+        else if ( velocity.x > 0 && velocity.y > 0  ) // moving down and right
+        {
+           animationSprite.Play("walkRight");
+        }
+        else if ( velocity.x < 0 && velocity.y > 0  ) // moving down and left
+        {
+           animationSprite.Play("walkLeft");
+        }
+        else if( velocity.x < 0) // moving left
+        {
+            animationSprite.Play("walkLeft");
+           
+        }  
+        else if(velocity.x > 0) // moving right
+        {
+            animationSprite.Play("walkRight");
+            
+        } 
+         else if(velocity.y<0) // moving up
+        {
+            animationSprite.Play("walkRight");
+            
+        } 
+         else if(velocity.y>0) // moving down
+        {
+            animationSprite.Play("walkLeft");
+            
+        } 
 
+         if (velocity.x == 0 && velocity.y == 0)
+         // if no keys are pressed at all
+         {animationSprite.Stop();}
+           
+
+        
+    }
+
+    public void NetworkPositionLerp() {
+        Position = new Vector2(Mathf.Lerp(Position.x, desiredPosition.x, 0.5f), Mathf.Lerp(Position.y, desiredPosition.y, 0.5f));
+    }
     public override void _PhysicsProcess(float delta)
     {
         if (isDog)
        {
            moveDog();
            animationHandler();
-       }
+       } else {
+            NetworkPositionLerp();
+        }
         
         
     }
