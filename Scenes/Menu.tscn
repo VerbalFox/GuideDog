@@ -1,11 +1,33 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scripts/Menu.cs" type="Script" id=1]
+[ext_resource path="res://title screen.png" type="Texture" id=2]
 
 [node name="Menu" type="Control"]
 margin_right = 40.0
 margin_bottom = 40.0
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_left = -15.0
+margin_top = -98.0
+margin_right = 2145.0
+margin_bottom = 1342.0
+rect_scale = Vector2( 0.9, 0.9 )
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = -82.0001
+margin_top = -114.0
+margin_right = 2100.0
+margin_bottom = 1324.0
+color = Color( 0, 0, 0, 0.627451 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
