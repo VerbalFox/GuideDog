@@ -66,6 +66,10 @@ public class Menu : Control
                 lobbyStatusLabel.Text = $"Player 1: {networkManager.isRemoteClientReady} \nYou: {networkManager.isReady}";
             }
 
+            if (networkManager.gameStarting) {
+                lobbyStatusLabel.Text += "\n\nGame starting in 5 seconds.";
+            }
+
         } else {
             ipLabel.Text = externalIpString;
         }

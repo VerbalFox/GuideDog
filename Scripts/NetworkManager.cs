@@ -23,12 +23,16 @@ public class NetworkManager : Node
     public bool isReady = false;
     public bool isRemoteClientReady = false;
     public bool connected = false;
-
+    public bool gameStarting = false;
     private float lobbyStatusPacketTimer = 0;
+    private float timeSyncPacketTimer = 0;
+
+    private SceneSwitcher switcher;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        switcher = GetNode<SceneSwitcher>("/root/root/SceneSwitcher");
         
     }
 
@@ -62,7 +66,6 @@ public class NetworkManager : Node
     }
 
     public void SendTimeSync() {
-        //Byte[] sendBytes = Encoding.ASCII.GetBytes("Is anybody there?");
         float timestamp = (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) * 0.001f;
         
         TimeSyncServerPacket timeSyncPacket = new TimeSyncServerPacket();
@@ -73,6 +76,28 @@ public class NetworkManager : Node
         Byte[] sendBytes = timeSyncPacket.Serialise();
         
         udpClient.Send(sendBytes, sendBytes.Length);
+    }
+
+    public void SendStartLevel() {
+        StartLevelPacket timeSyncPacket = new StartLevelPacket();
+        
+        timeSyncPacket.serverTime = timeElapsed + 5;
+        
+        Byte[] sendBytes = timeSyncPacket.Serialise();
+        
+        udpClient.Send(sendBytes, sendBytes.Length);
+        if (!gameStarting) {
+            Task.Run(() => LoadGame(timeElapsed + 5));
+            gameStarting = true;
+        }
+    }
+
+    private void LoadGame(double startTime) {
+        while (timeElapsed < startTime) {
+
+        }
+        
+        switcher.LoadGame();
     }
     
     public async void Receive() {
@@ -100,6 +125,15 @@ public class NetworkManager : Node
 
                     isRemoteClientReady = lobbyStatusPacket.isReady;
                     break;
+                case PacketType.GameStart:
+                    StartLevelPacket startLevelPacket = new StartLevelPacket();
+                    startLevelPacket.Deserialise(receivedResults.Buffer);
+                    
+                    if (!gameStarting) {
+                        Task.Run(() => LoadGame(startLevelPacket.serverTime));
+                        gameStarting = true;
+                    }
+                    break;
             }
         }
     }
@@ -111,11 +145,21 @@ public class NetworkManager : Node
 
         if (connected) {
             lobbyStatusPacketTimer += delta;
+            timeSyncPacketTimer += delta;
         }
 
         if (lobbyStatusPacketTimer > 0.1f) {
-            lobbyStatusPacketTimer = 0;
+            lobbyStatusPacketTimer -= 0.1f;
             SendLobbyStatus();
+        }
+
+        if (timeSyncPacketTimer > 1) {
+            timeSyncPacketTimer -= 1;
+            SendTimeSync();
+        }
+
+        if (!gameStarting && isReady && isRemoteClientReady && isHost) {
+            SendStartLevel();
         }
     }
     

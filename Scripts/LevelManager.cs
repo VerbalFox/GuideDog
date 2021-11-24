@@ -48,8 +48,8 @@ public class LevelManager : Node2D
 
         if (Input.IsActionJustPressed("debugSwitch"))
         {
-            GetNode<HumanPlayer>("/root/Game/HumanPlayer").isPlayer = !GetNode<HumanPlayer>("/root/Game/HumanPlayer").isPlayer;
-            GetNode<DogPlayer>("/root/Game/DogPlayer").isDog = !GetNode<DogPlayer>("/root/Game/DogPlayer").isDog;
+            GetNode<HumanPlayer>("HumanPlayer").isPlayer = !GetNode<HumanPlayer>("HumanPlayer").isPlayer;
+            GetNode<DogPlayer>("DogPlayer").isDog = !GetNode<DogPlayer>("DogPlayer").isDog;
         }
     }
 }
