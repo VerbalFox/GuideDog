@@ -1,32 +1,30 @@
 using Godot;
 using System;
 
-public class HumanPlayer : KinematicBody2D
+public class DogPlayer : KinematicBody2D
 {
-  // Declare member variables here. Examples:
-   public bool isPlayer;
+    // Declare member variables here. Examples:
+   public bool isDog;
    float speed;
    Vector2 velocity;
-
-   bool hitCrate;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        isPlayer = true;
-        setSpeed(150);
+        isDog = false;
+        setSpeed(270);
         velocity = new Vector2(0, 0);
     }
 
-    public void setPlayerBool(string msg)
+    public void setDogBool(string msg)
     {
         if(msg == "yes")
         {
-            isPlayer = true;
+            isDog = true;
         }
         else if(msg == "no")
         {
-            isPlayer = false;
+            isDog = false;
         }
     }
 
@@ -35,22 +33,21 @@ public class HumanPlayer : KinematicBody2D
         speed = spd;
     }
 
-    public void movePlayer()
+    public void moveDog()
     {
         if(Input.IsActionPressed("ui_up"))
         {
-            velocity.y = -speed;
+         velocity.y = -speed;
         }  
         if(Input.IsActionPressed("ui_down"))
         {
-            velocity.y = speed;
+         velocity.y = speed;
         } 
       
         if (Input.IsActionPressed("ui_down") != true && Input.IsActionPressed("ui_up") != true)
         {
             velocity.y=0;
         }
-
 
         if(Input.IsActionPressed("ui_left"))
         {
@@ -66,17 +63,16 @@ public class HumanPlayer : KinematicBody2D
         {
             velocity.x=0;
         }
-
       
-      // normalise
+        // normalise
         velocity = velocity.Normalized() * speed;
+
         MoveAndSlide(velocity);
     }
 
-  
     public override void _PhysicsProcess(float delta)
     {
-        if (isPlayer)
-        movePlayer();
+        if (isDog)
+        moveDog();
     }
 }
