@@ -18,6 +18,8 @@ public class DogPlayer : KinematicBody2D
         setSpeed(270);
         animationSprite = GetNode<AnimatedSprite>("AnimatedSprite");
         velocity = new Vector2(0, 0);
+
+        desiredPosition = Position;
     }
 
     public void setDogBool(string msg)

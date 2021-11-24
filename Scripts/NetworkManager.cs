@@ -55,7 +55,8 @@ public class NetworkManager : Node
         
         Byte[] sendBytes = connectionPacket.Serialise();
         
-        udpClient.Send(sendBytes, sendBytes.Length);
+        for (int i = 0; i < 6; i++)
+            udpClient.Send(sendBytes, sendBytes.Length);
     }
 
     public void SendLobbyStatus() {
@@ -88,7 +89,9 @@ public class NetworkManager : Node
         
         Byte[] sendBytes = timeSyncPacket.Serialise();
         
-        udpClient.Send(sendBytes, sendBytes.Length);
+        for (int i = 0; i < 6; i++)
+            udpClient.Send(sendBytes, sendBytes.Length);
+
         if (!gameStarting) {
             Task.Run(() => LoadGame(timeElapsed + 5));
             gameStarting = true;
@@ -144,9 +147,11 @@ public class NetworkManager : Node
                     timeElapsed = timeReceivedPacket.serverTime + (currentTimestamp - timeReceivedPacket.serverTimestamp);
                     break;
                 case PacketType.ConnectionRequest:
-                    ConnectionPacket connectionReceivedPacket = new ConnectionPacket();
-                    connectionReceivedPacket.Deserialise(receivedResults.Buffer);
-                    Connect(receivedResults.RemoteEndPoint.Address.ToString(), 24011);
+                    if (!connected) {
+                        ConnectionPacket connectionReceivedPacket = new ConnectionPacket();
+                        connectionReceivedPacket.Deserialise(receivedResults.Buffer);
+                        Connect(receivedResults.RemoteEndPoint.Address.ToString(), 24011);
+                    }
                     break;
                 case PacketType.LobbyStatus:
                     LobbyStatusPacket lobbyStatusPacket = new LobbyStatusPacket();

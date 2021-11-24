@@ -14,7 +14,7 @@ lvl2 = ExtResource( 3 )
 lvl3 = ExtResource( 4 )
 
 [node name="DogPlayer" parent="." instance=ExtResource( 6 )]
-position = Vector2( 683.328, 355.843 )
+position = Vector2( 963, 953 )
 
 [node name="HumanPlayer" parent="." instance=ExtResource( 5 )]
 position = Vector2( 962, 957 )
