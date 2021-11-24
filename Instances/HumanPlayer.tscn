@@ -62,9 +62,20 @@
 [ext_resource path="res://Characters/Back/IMG_2223.PNG" type="Texture" id=60]
 
 [sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 10, 4.19423 )
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
+"frames": [ ExtResource( 22 ), ExtResource( 19 ), ExtResource( 24 ), ExtResource( 25 ), ExtResource( 26 ), ExtResource( 17 ), ExtResource( 27 ), ExtResource( 21 ), ExtResource( 18 ), ExtResource( 16 ), ExtResource( 23 ), ExtResource( 20 ), ExtResource( 28 ) ],
+"loop": true,
+"name": "walkLeft",
+"speed": 15.0
+}, {
+"frames": [ ExtResource( 31 ), ExtResource( 32 ), ExtResource( 33 ), ExtResource( 34 ), ExtResource( 35 ), ExtResource( 53 ), ExtResource( 52 ), ExtResource( 55 ), ExtResource( 51 ), ExtResource( 50 ), ExtResource( 54 ), ExtResource( 60 ), ExtResource( 58 ), ExtResource( 59 ), ExtResource( 56 ), ExtResource( 57 ) ],
+"loop": true,
+"name": "walkUp",
+"speed": 15.0
+}, {
 "frames": [ ExtResource( 40 ), ExtResource( 37 ), ExtResource( 38 ), ExtResource( 39 ), ExtResource( 41 ), ExtResource( 42 ), ExtResource( 45 ), ExtResource( 46 ), ExtResource( 47 ), ExtResource( 36 ), ExtResource( 43 ), ExtResource( 44 ), ExtResource( 48 ), ExtResource( 49 ), ExtResource( 29 ), ExtResource( 30 ) ],
 "loop": true,
 "name": "walkDown",
@@ -74,23 +85,14 @@ animations = [ {
 "loop": true,
 "name": "walkRight",
 "speed": 15.0
-}, {
-"frames": [ ExtResource( 31 ), ExtResource( 32 ), ExtResource( 33 ), ExtResource( 34 ), ExtResource( 35 ), ExtResource( 53 ), ExtResource( 52 ), ExtResource( 55 ), ExtResource( 51 ), ExtResource( 50 ), ExtResource( 54 ), ExtResource( 60 ), ExtResource( 58 ), ExtResource( 59 ), ExtResource( 56 ), ExtResource( 57 ) ],
-"loop": true,
-"name": "walkUp",
-"speed": 15.0
-}, {
-"frames": [ ExtResource( 22 ), ExtResource( 19 ), ExtResource( 24 ), ExtResource( 25 ), ExtResource( 26 ), ExtResource( 17 ), ExtResource( 27 ), ExtResource( 21 ), ExtResource( 18 ), ExtResource( 16 ), ExtResource( 23 ), ExtResource( 20 ), ExtResource( 28 ) ],
-"loop": true,
-"name": "walkLeft",
-"speed": 15.0
 } ]
 
 [node name="HumanPlayer" type="KinematicBody2D"]
+scale = Vector2( 1.5, 1.5 )
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -0.198669, -0.834625 )
+position = Vector2( -0.198669, 16.5827 )
 scale = Vector2( 1.5, 3 )
 shape = SubResource( 1 )
 
