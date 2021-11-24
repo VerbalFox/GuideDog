@@ -74,8 +74,6 @@ public class Crate : RigidBody2D
         CheckCollision(new Vector2(Position.x + 192, Position.y), 1);
         CheckCollision(new Vector2(Position.x, Position.y + 192), 2);
         CheckCollision(new Vector2(Position.x - 192, Position.y), 3);
-
-        GD.Print($"{cantCrush[0]}, {cantCrush[1]}, {cantCrush[2]}, {cantCrush[3]}");
     }
 
     private void CheckCollision(Vector2 _centre, int _side)
@@ -105,7 +103,7 @@ public class Crate : RigidBody2D
                 prevPos = Position;
             }
         }
-        else
+        else if (_collision.Name != Name)
         {
             cantMove[_side] = true;
         }
