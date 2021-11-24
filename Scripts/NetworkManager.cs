@@ -24,9 +24,12 @@ public class NetworkManager : Node
     public bool isRemoteClientReady = false;
     public bool connected = false;
     public bool gameStarting = false;
+    public bool gameLoaded = false;
     private float lobbyStatusPacketTimer = 0;
     private float timeSyncPacketTimer = 0;
-
+    private float positionSyncPacketTimer = 0;
+    private HumanPlayer hostPlayer;
+    private DogPlayer clientPlayer;
     private SceneSwitcher switcher;
 
     // Called when the node enters the scene tree for the first time.
@@ -92,12 +95,36 @@ public class NetworkManager : Node
         }
     }
 
+    public void SendPositionSync(Vector2 pos) {
+        PositionUpdatePacket positionUpdate = new PositionUpdatePacket();
+
+        positionUpdate.posX = pos.x;
+        positionUpdate.posY = pos.y;
+
+        Byte[] sendBytes = positionUpdate.Serialise();
+
+        udpClient.Send(sendBytes, sendBytes.Length);
+    }
+
     private void LoadGame(double startTime) {
         while (timeElapsed < startTime) {
 
         }
-        
+
         switcher.LoadGame();
+
+        hostPlayer = GetNode<HumanPlayer>("../SceneSwitcher/Game/HumanPlayer");
+        clientPlayer = GetNode<DogPlayer>("../SceneSwitcher/Game/DogPlayer");
+
+        if (isHost) {
+            hostPlayer.isPlayer = true;
+            clientPlayer.isDog = false;
+        } else {
+            hostPlayer.isPlayer = false;
+            clientPlayer.isDog = true;
+        }
+
+        gameLoaded = true;
     }
     
     public async void Receive() {
@@ -134,6 +161,16 @@ public class NetworkManager : Node
                         gameStarting = true;
                     }
                     break;
+                case PacketType.PositionUpdate:
+                    PositionUpdatePacket positionUpdatePacket = new PositionUpdatePacket();
+                    positionUpdatePacket.Deserialise(receivedResults.Buffer);
+
+                    if (isHost) {
+                        clientPlayer.Position = new Vector2((float)positionUpdatePacket.posX, (float)positionUpdatePacket.posY);
+                    } else {
+                        hostPlayer.Position = new Vector2((float)positionUpdatePacket.posX, (float)positionUpdatePacket.posY);
+                    }
+                    break;
             }
         }
     }
@@ -146,6 +183,7 @@ public class NetworkManager : Node
         if (connected) {
             lobbyStatusPacketTimer += delta;
             timeSyncPacketTimer += delta;
+            positionSyncPacketTimer += delta;
         }
 
         if (lobbyStatusPacketTimer > 0.1f) {
@@ -156,6 +194,15 @@ public class NetworkManager : Node
         if (timeSyncPacketTimer > 1) {
             timeSyncPacketTimer -= 1;
             SendTimeSync();
+        }
+        
+        if (positionSyncPacketTimer > (1.0f / 20) && gameLoaded) {
+            positionSyncPacketTimer = 0;
+            if (isHost) {
+                SendPositionSync(hostPlayer.Position);
+            } else {
+                SendPositionSync(clientPlayer.Position);
+            }
         }
 
         if (!gameStarting && isReady && isRemoteClientReady && isHost) {

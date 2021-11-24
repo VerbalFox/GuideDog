@@ -24,10 +24,6 @@ config/name="GuideDog"
 run/main_scene="res://Scenes/root.tscn"
 config/icon="res://Art/Entities/icon.png"
 
-[autoload]
-
-Player="*res://Scripts/Player.cs"
-
 [debug]
 
 multirun/number_of_windows=2
@@ -38,8 +34,8 @@ multirun/other_window_args="join"
 
 [display]
 
-window/size/width=1920
-window/size/height=1080
+window/size/width=1280
+window/size/height=720
 
 [editor]
 
