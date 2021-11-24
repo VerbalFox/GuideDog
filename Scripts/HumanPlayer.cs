@@ -186,7 +186,7 @@ public class HumanPlayer : KinematicBody2D
     public override void _PhysicsProcess(float delta)
     {
         if (isPlayer)
-        movePlayer();
-        animationHandler();
+        {movePlayer();
+        animationHandler();}
     }
 }
